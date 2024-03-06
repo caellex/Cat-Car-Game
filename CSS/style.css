@@ -20,12 +20,14 @@ height: 100%;
     
 }
 .sidewalk{
+    display: flex;
     position: relative;
-    background-color: rgb(78, 78, 78);
+    background-color: #4e4e4e;
     height: 97vh;
     width: 90px;
     border: solid black 1px;
     border-radius: 130px;
+    justify-content: center;
 }
 
 #car{
@@ -37,10 +39,11 @@ height: 100%;
 
 #meetingFriend1{
     position: relative;
-    margin-left: 370px;
+    margin-top: 15px;
     height: 50px;
     width: 50px;
     background-color: goldenrod;
+    z-index: 1;
 }
 
 

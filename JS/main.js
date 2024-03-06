@@ -1,4 +1,6 @@
 const margin = 20
+let buddy;
+let buddyId;
 
 let car = {
     parts: [],
@@ -54,7 +56,6 @@ let buddyChance = 0;
 
 setInterval(handleParts, 100)
 
-
 view();
 function view() {
     let app = document.getElementById('app')
@@ -62,16 +63,17 @@ function view() {
     <div id="roadContainer">
     <!-- Left sidewalk - contains friend -->
         <div id="sidewalk1" class="sidewalk">
-        <div id="meetingFriend1"></div>
         </div>
         <div id="road">
-            <div id="leftRoad"></div>
-            <div id="rightRoad"></div>
-            <div id="car" style="left: ${car.x}; top: ${car.y}"></div>
-            
+        <div id="leftRoad"></div>
+        <div id="rightRoad"></div>
+        <div id="car" style="left: ${car.x}; top: ${car.y}"></div>
+        
         </div>
-        <div id="sidewalk2" class="sidewalk"></div>
-        <div id="coolnessFactor"></div>
+        <div id="sidewalk2" class="sidewalk">
+            <div id="meetingFriend1" style="top: ${buddy.y}></div>
+        </div>
+        <div id="coolnessFactor"></div> <!--rar ""-ting her-->
     </div>
     `
     if (car.coolness > 9000) {                            // Controller funksjon, [trenger egen funksjon, eller må legges i en annen funksjon]
@@ -109,6 +111,7 @@ document.addEventListener("keydown", (event) => {
         }
     })
 
+
     const minY = margin
     const minX = margin
     const maxY = road.clientHeight - carElem.clientHeight - margin;
@@ -134,6 +137,8 @@ document.addEventListener("keyup", (event) => {
     keysPressed = _keys
 })
 
+
+
 function createPart() {
     const road = document.getElementById('road')
     let part = {
@@ -156,29 +161,33 @@ function handleParts() {
 }
 
 function createBuddy(hasPart, greeting) {
-
     let buddy = {
         part: hasPart,
         greeting: greeting,
+        y: 0,
     }
     return buddy;
 }
+
 
 function buddyAppear(somethingElse, greetingIndex) {
     function chanceAppear() {
         buddyChance = Math.floor(Math.random() * 10) + 1;
     }
     if (buddyChance == 3 || buddyChance == 6 || buddyChance == 9) {
-        createBuddy(false, greetingArray[greetingIndex])
+        buddy=createBuddy(false, greetingArray[greetingIndex])
     }
     if (buddyChance == 1 || buddyChance == 5) {
-        createBuddy(true, greetingArray[greetingIndex])
+        buddy=createBuddy(true, greetingArray[greetingIndex])
     }
     if (buddyChance == 2 || buddyChance == 4 || buddyChance == 8 || buddyChance == 10) {
         buddyChance == 10;
     }
-ssetTimeout(chanceAppear(), 2500)
+setTimeout(chanceAppear(), 2500)
     setInterval(chanceAppear, 3500)
+buddyId=setInterval((e) => {
+    buddy.y+=10
+}, 100);
 
 
     /* 
@@ -196,7 +205,6 @@ function getResponse() {
     function calculateResponse() {
         let responseId = Math.floor(Math.random() * 14);
     }
-
     buddyAppear('somethingElse', responseId);
 
 }
