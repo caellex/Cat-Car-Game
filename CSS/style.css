@@ -4,27 +4,49 @@ height: 100%;
 
 }
 
-#road{
-    position: absolute;
-    background-image: url(Assets/road.png);
-    height: 97%;
-    width: 30%;
-    border: solid black 1px;
-    margin: auto;
+#roadContainer {
+    position: relative;
+    display: flex;
+    height: 100%;
+    justify-content: center;
 }
 
-#car {
-    position: absolute;
-    height: 100px;
-    width: 50px;
-    background-image: url(car.png)
+#road{
+    background-color: #e4e4e4;
+    height: 97vh;
+    width: 400px;
+    border: solid black 1px;
+    border-radius: 5%;
+    
+}
+.sidewalk{
+    position: relative;
+    background-color: rgb(78, 78, 78);
+    height: 97vh;
+    width: 90px;
+    border: solid black 1px;
+    border-radius: 130px;
+}
+#sidewalk2{
+
+}
+#sidewalk1{
+
+}
+
+#car{
+    position: relative;
+    height: 250px;
+    width: 150px;
+    background-color: black;
 }
 
 #meetingFriend1{
     position: relative;
+    margin-left: 370px;
     height: 50px;
     width: 50px;
-    background-color: green;
+    background-color: goldenrod;
 }
 
 
