@@ -2,18 +2,58 @@ const margin = 20
 
 let car = {
     parts: [],
+    coolness: 5,
     x_val: margin,
     y_val: margin,
     x: margin + "px",
     y: margin + "px",
-}
-let greetingArray = ["*Waves at you!*","*Nods at you* Sweet ride!","" ]
+};
+let greetingArray = [
+    "*Waves at you!* Impressive ride!",
+    "*Nods at you* Sweet wheels!",
+    "*Thumbs up* Looking good!",
+    "*Salutes* Killer car!",
+    "*Nods at you* Any mods?",
+    "*Waves at you* Stylish choice!",
+    "*Thumbs up* Rad ride!",
+    "*Salutes* Sharp car!",
+    "*Waves at you!* Fast and furious!",
+    "*Nods at you* Customized much?",
+    "*Thumbs up* Top-notch!",
+    "*Salutes* Dope wheels!",
+    "*Waves at you!* Cheers, mate!",
+    "*Nods at you* Any favorite features?",
+    "*Thumbs up* Let's cruise!"];
+// 0 - 14
+// let responseId = Math.floor(Math.random() * 14); Gir et tall mellom 0 - 14, som kan brukes  for å hente ut index til en tilfeldig respons.
 
-let keysPressed = []
+let keysPressed = [];
+let partNames = [
+    "Fluffy Sideskirt Covers",
+    "Long Tail Antenna",
+    "Cat-Ear Side Mirrors",
+    "Paw Print Alloy Wheels",
+    "Whisker Grille Decal",
+    "Cat Eye Headlights",
+    "Tail-shaped Exhaust Pipe",
+    "Purr-fectly Cushioned Seats",
+    "Furry Steering Wheel Cover",
+    "Cat Paw Gas and Brake Pedals",
+    "Meow Melody Horn System",
+    "Curled-up Cat Tail Gear Shift Knob",
+    "Playful Pounce Suspension System"
+];
+//  0 - 12
+// let partsId = Math.floor(Math.random() * 12);  Gir et tall mellom 0 - 12, som kan brukes  for å hente ut index til en tilfeldig del.
+
+let parts = []
+
 
 const coolnessMax = 9000;
 let buddyChance = 0;
-let coolness = 5;
+
+setInterval(handleParts, 100)
+
 
 view();
 function view() {
@@ -34,8 +74,8 @@ function view() {
         <div id="coolnessFactor"></div>
     </div>
     `
-    if(coolness>=9000){
-        document.getElementById('').innerHTML=alert("It's over 9000!!!\nIT'S TOO MUCH--")
+    if (car.coolness > 9000) {                            // Controller funksjon, [trenger egen funksjon, eller må legges i en annen funksjon]
+        document.getElementById('').innerHTML = alert("It's over 9000!!!\nIT'S TOO MUCH--")
         alert("car exploded")
     }
 }
@@ -43,12 +83,12 @@ function view() {
 document.addEventListener("keydown", (event) => {
     const keyName = event.keyCode
     const moveBy = 20
+    
+    const road = document.getElementById('road')
+    const carElem = document.getElementById('car')
 
     if (!keysPressed.includes(keyName)) keysPressed.push(keyName)
     console.log(keysPressed)
-
-    const road = document.getElementById('road')
-    const carElem = document.getElementById('car')
 
     //bruker kan bruke piltaster på tastatur for å styre bil
     // tallene er piltaster
@@ -63,10 +103,10 @@ document.addEventListener("keydown", (event) => {
             case 39:
                 car.x_val += moveBy
                 break
-            case 40: 
+            case 40:
                 car.y_val += moveBy
                 break
-        }       
+        }
     })
 
     const minY = margin
@@ -77,7 +117,7 @@ document.addEventListener("keydown", (event) => {
     if (car.x_val <= minX) car.x_val = minX
     if (car.y_val <= minY) car.y_val = minY
     if (car.x_val >= maxX) car.x_val = maxX
-    if (car.y_val >= maxY) car.y_val = maxY 
+    if (car.y_val >= maxY) car.y_val = maxY
 
     car.x = car.x_val + "px"
     car.y = car.y_val + "px"
@@ -89,37 +129,57 @@ document.addEventListener("keyup", (event) => {
     const keyName = event.keyCode
     let _keys = []
     keysPressed.forEach((e) => {
-        if (!keyName == e) _keys.push(e)
+        if (keyName != e) _keys.push(e)
     })
-    keysPressed = _keys 
+    keysPressed = _keys
 })
 
+function createPart() {
+    const road = document.getElementById('road')
+    let part = {
+        name: partNames[Math.random() * partNames.length],
+        coolness: Math.random() * 100, 
+        x: Math.random() * road.clientWidth,
+        y: margin,
+    }
+    return part
+}
+
+function handleParts() {
+    if (Math.random() > 0.9) {
+        parts.push(createPart())
+    }
+
+    for (let part in parts) {
+       
+    }
+}
 
 function createBuddy(hasPart, greeting) {
 
- let buddy = {
+    let buddy = {
         part: hasPart,
         greeting: greeting,
     }
     return buddy;
 }
 
-function buddyAppear(somethingElse,greetingIndex){ 
-    function chanceAppear(){
-    buddyChance = Math.floor(Math.random() * 10)+ 1;
+function buddyAppear(somethingElse, greetingIndex) {
+    function chanceAppear() {
+        buddyChance = Math.floor(Math.random() * 10) + 1;
     }
-    if(buddyChance == 3 || buddyChance == 6 || buddyChance == 9){
+    if (buddyChance == 3 || buddyChance == 6 || buddyChance == 9) {
         createBuddy(false, greetingArray[greetingIndex])
     }
-    if(buddyChance == 1 || buddyChance == 5){
+    if (buddyChance == 1 || buddyChance == 5) {
         createBuddy(true, greetingArray[greetingIndex])
     }
-    if(buddyChance == 2 || buddyChance == 4 || buddyChance == 8 || buddyChance == 10){
+    if (buddyChance == 2 || buddyChance == 4 || buddyChance == 8 || buddyChance == 10) {
         buddyChance == 10;
     }
-
+ssetTimeout(chanceAppear(), 2500)
     setInterval(chanceAppear, 3500)
-    
+
 
     /* 
     Tenkte på å kjøre buddyAppear på intervaller for å hente ut verdi, 
@@ -127,158 +187,31 @@ function buddyAppear(somethingElse,greetingIndex){
     hvis verdi tilsvarer 2 - 4 - 8 - 10 - skal ikke en kompis dukke opp
     hvis verdi tilsvarer 3 - 6 - 9 skal en kompis dukke opp
     */
-    
+
 }
 
 
-function buddyGreet(){
-    
-    
-    
+function getResponse() {
+    calculateResponse();
+    function calculateResponse() {
+        let responseId = Math.floor(Math.random() * 14);
+    }
+
+    buddyAppear('somethingElse', responseId);
+
 }
 
+function buddyGreet() {
 
 
 
+}
 
+function endGame() {
+    if (car.coolness <= 0) {
+        // Boss screen
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
