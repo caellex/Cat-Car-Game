@@ -17,6 +17,7 @@ height: 100%;
     width: 400px;
     border: solid black 1px;
     border-radius: 5%;
+    background-image: url('Assets/road.png');
     
 }
 .sidewalk{
@@ -45,6 +46,22 @@ height: 100%;
     z-index: 1;
 }
 
+#responses {
+    position: absolute;
+    left: 120px;
+    top: -40px;
+    width: 140px;
+    z-index: 3;
+}
+
+#bubble {
+    position: absolute;
+    width: 500%;
+    transform: scaleX(-1);
+    left: 53px;
+    top: -75px;
+    z-index: 2;
+}
 
 
 

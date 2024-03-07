@@ -50,7 +50,7 @@ let partNames = [
 // let partsId = Math.floor(Math.random() * 12);  Gir et tall mellom 0 - 12, som kan brukes  for å hente ut index til en tilfeldig del.
 
 let parts = []
-
+let currentResponse
 
 const coolnessMax = 9000;
 let buddyChance = 0;
@@ -176,11 +176,14 @@ function drawBuddy(){
     if (buddy == undefined || buddy == null){
         return""
     }
-    return`<div id="meetingFriend1" style="top: ${buddy.y + 'px'}"></div>`
+    return`<div>
+                <div id="meetingFriend1" style="top: ${buddy.y + 'px'}"> ${speakingBubble()}
+                </div>
+            </div>`
 }
 
 
-function buddyAppear(somethingElse, greetingIndex) {
+function buddyAppear(greetingIndex) {
     if (!buddy){
         buddyChance = Math.floor(Math.random() * 10) + 1;
 
@@ -216,22 +219,30 @@ function buddyAppear(somethingElse, greetingIndex) {
 
 }
 
-
-function getResponse() {
-    calculateResponse();
-    function calculateResponse() {
-        let responseId = Math.floor(Math.random() * 14); //Legg gjerne til hvor lang array er, ved array.length for å få en rå verdi
-    }
-    buddyAppear('somethingElse', responseId);
-
-}
-
+function calculateResponse() {
+    return Math.floor(Math.random() * greetingArray.length);}//Legg gjerne til hvor lang array er, ved array.length for å få en rå verdi
+    
 function buddyGreet() {
     if (!car.canMove){
         getResponse(), buddyAppear()
     }
 
+}
 
+function speakingBubble(){
+    if (!car.canMove){
+        currentResponse = greetingArray[calculateResponse()]
+        return`<div>
+                <img id="bubble" src="Assets/snkkebble.png">
+                <div id="responses">${currentResponse}</div>
+                </div>`
+    } return ""
+}
+
+function answer(){
+    if (greetingArray[0,5].includes("Waves")){
+
+    }
 }
 
 function endGame() {
@@ -241,5 +252,3 @@ function endGame() {
 
 }
 
-
-//Møtes 12:45, kode til 14:00, forberede out til ca 14:45, avsluttende møte! Husk LOGGGGGGGG!
