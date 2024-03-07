@@ -9,6 +9,7 @@ let car = {
     y_val: margin,
     x: margin + "px",
     y: margin + "px",
+    canMove: true,
 };
 let greetingArray = [
     "*Waves at you!* Impressive ride!",
@@ -54,7 +55,8 @@ let parts = []
 const coolnessMax = 9000;
 let buddyChance = 0;
 
-setInterval(handleParts, 100)
+//setInterval(handleParts, 100)
+setInterval(buddyAppear, 3500)
 
 view();
 function view() {
@@ -71,7 +73,7 @@ function view() {
         
         </div>
         <div id="sidewalk2" class="sidewalk">
-            <div id="meetingFriend1" style="top: ${buddy.y}></div>
+            ${drawBuddy()}
         </div>
         <div id="coolnessFactor"></div> <!--rar ""-ting her-->
     </div>
@@ -94,6 +96,7 @@ document.addEventListener("keydown", (event) => {
 
     //bruker kan bruke piltaster på tastatur for å styre bil
     // tallene er piltaster
+    if (car.canMove){
     keysPressed.forEach((e) => {
         switch (e) {
             case 37:
@@ -109,7 +112,7 @@ document.addEventListener("keydown", (event) => {
                 car.y_val += moveBy
                 break
         }
-    })
+    })}
 
 
     const minY = margin
@@ -139,7 +142,7 @@ document.addEventListener("keyup", (event) => {
 
 
 
-function createPart() {
+/*function createPart() {
     const road = document.getElementById('road')
     let part = {
         name: partNames[Math.random() * partNames.length],
@@ -158,7 +161,7 @@ function handleParts() {
     for (let part in parts) {
        
     }
-}
+}*/
 
 function createBuddy(hasPart, greeting) {
     let buddy = {
@@ -169,11 +172,18 @@ function createBuddy(hasPart, greeting) {
     return buddy;
 }
 
+function drawBuddy(){
+    if (buddy == undefined || buddy == null){
+        return""
+    }
+    return`<div id="meetingFriend1" style="top: ${buddy.y + 'px'}"></div>`
+}
+
 
 function buddyAppear(somethingElse, greetingIndex) {
-    function chanceAppear() {
+    if (!buddy){
         buddyChance = Math.floor(Math.random() * 10) + 1;
-    }
+
     if (buddyChance == 3 || buddyChance == 6 || buddyChance == 9) {
         buddy=createBuddy(false, greetingArray[greetingIndex])
     }
@@ -183,13 +193,20 @@ function buddyAppear(somethingElse, greetingIndex) {
     if (buddyChance == 2 || buddyChance == 4 || buddyChance == 8 || buddyChance == 10) {
         buddyChance == 10;
     }
-setTimeout(chanceAppear(), 2500)
-    setInterval(chanceAppear, 3500)
-buddyId=setInterval((e) => {
-    buddy.y+=10
-}, 100);
+    }
+    if (buddy && !buddyId){
+        buddyId=setInterval((e) => {
+            buddy.y+=10;
+            if (buddy.y >= car.y_val){
+                clearInterval(buddyId)
+                car.canMove = false
+            }
+            view();
+        }, 100);
+    }
 
 
+    //Alt er relativt!
     /* 
     Tenkte på å kjøre buddyAppear på intervaller for å hente ut verdi, 
     hvis verdi tilsvarer 1 - 5 skal en kompis dukke opp med en del
@@ -203,14 +220,16 @@ buddyId=setInterval((e) => {
 function getResponse() {
     calculateResponse();
     function calculateResponse() {
-        let responseId = Math.floor(Math.random() * 14);
+        let responseId = Math.floor(Math.random() * 14); //Legg gjerne til hvor lang array er, ved array.length for å få en rå verdi
     }
     buddyAppear('somethingElse', responseId);
 
 }
 
 function buddyGreet() {
-
+    if (!car.canMove){
+        getResponse(), buddyAppear()
+    }
 
 
 }
@@ -223,3 +242,4 @@ function endGame() {
 }
 
 
+//Møtes 12:45, kode til 14:00, forberede out til ca 14:45, avsluttende møte! Husk LOGGGGGGGG!
